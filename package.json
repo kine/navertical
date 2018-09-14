@@ -1,0 +1,80 @@
+{
+    "name": "navertical",
+    "displayName": "NAVERTICA AL Extension",
+    "description": "Navertica AL Extension for DevOps management and managing multi-level App dependencies",
+    "version": "0.0.1",
+    "publisher": "Kamil Sacek (Kine)",
+    "engines": {
+        "vscode": "^1.25.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "Kine","AL","NAVERTICA","MSDYN365BC","BusinessCentral"
+    ],
+    "icon": "img/navertica_logo_al.png",
+    "activationEvents": [
+        "onCommand:navertical.InstallModules",
+        "onCommand:navertical.CreateEnvironment",
+        "onCommand:navertical.RemoveEnvironment",
+        "onCommand:navertical.CompileTree",
+        "onCommand:navertical.InstallTree",
+        "onCommand:navertical.UninstallTree",
+        "onCommand:navertical.CreatePackage"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "navertical.InstallModules",
+                "title": "Install Modules",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.CompileTree",
+                "title": "Compile App Tree",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.CreateEnvironment",
+                "title": "Create Environment",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.RemoveEnvironment",
+                "title": "Remove Environment",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.CreatePackage",
+                "title": "Create Nuget Package",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.PublishTree",
+                "title": "Publish App Tree",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.UnpublishTree",
+                "title": "Unpublish App Tree",
+                "category": "Navertical"
+            }
+            
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
