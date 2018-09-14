@@ -27,7 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.UninstallTree',()=>{actions.UninstallTree()}),
         vscode.commands.registerCommand('navertical.PublishTree',()=>{actions.PublishTree()}),
         vscode.commands.registerCommand('navertical.UnpublishTree',()=>{actions.UnpublishTree()}),
-        vscode.commands.registerCommand('navertical.CreatePackage',()=>{actions.CreatePackage()})
+        vscode.commands.registerCommand('navertical.CreatePackage',()=>{actions.CreatePackage()}),
+        vscode.commands.registerCommand('navertical.StopEnvironment',()=>{actions.StopEnvironment()}),
+        vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()})
     ];
 
     context.subscriptions.concat(commandList);

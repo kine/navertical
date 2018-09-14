@@ -18,13 +18,34 @@
         "onCommand:navertical.InstallModules",
         "onCommand:navertical.CreateEnvironment",
         "onCommand:navertical.RemoveEnvironment",
+        "onCommand:navertical.StopEnvironment",
+        "onCommand:navertical.StartEnvironment",
         "onCommand:navertical.CompileTree",
         "onCommand:navertical.InstallTree",
         "onCommand:navertical.UninstallTree",
-        "onCommand:navertical.CreatePackage"
+        "onCommand:navertical.CreatePackage",
+        "onCommand:navertical.PublishTree",
+        "onCommand:navertical.UnpublishTree"
     ],
     "main": "./out/extension",
     "contributes": {
+        "configuration":[
+            {
+                "title": "Navertical configuration",
+                "properties": {
+                    "navertical.CertPath": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Path to CodeSigning certificate file. If not specified, app will not be signed"
+                    },
+                    "navertical.IgnoreVerification": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If set, when installing app the signature of the app will not be verified."
+                    }
+                }
+            }
+        ],
         "commands": [
             {
                 "command": "navertical.InstallModules",
@@ -60,8 +81,17 @@
                 "command": "navertical.UnpublishTree",
                 "title": "Unpublish App Tree",
                 "category": "Navertical"
-            }
-            
+            },
+            {
+                "command": "navertical.StopEnvironment",
+                "title": "Stop docker container",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.StartEnvironment",
+                "title": "Start docker container",
+                "category": "Navertical"
+            }            
         ]
     },
     "scripts": {

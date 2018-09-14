@@ -26,7 +26,7 @@ export function InstallModules() {
 export function CompileTree() {
     terminal.PSTerminal.show(true);
     const currentRoot = GetCurrentRootPath();
-
+    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Download-ALSystemPackages -AlPackagesPath ${currentRoot}`);
     terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Compile-ALProjectTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot}`);
 
 }
@@ -42,8 +42,11 @@ export function UninstallTree() {
 export function PublishTree() {
     terminal.PSTerminal.show(true);
     const currentRoot = GetCurrentRootPath();
-
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Publish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot}`);
+    var skipVerification = 'false';
+    if (vscode.workspace.getConfiguration('navertical.IgnoreVerification')) {
+        skipVerification = 'true';
+    }
+    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Publish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot} -SkipVerification ${skipVerification}`);
 
 }
 
@@ -73,4 +76,18 @@ export function RemoveEnvironment() {
     terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Remove-ALEnvironment`);
 
 }
+export function StartEnvironment() {
+    const currentRoot = GetCurrentRootPath();
+    terminal.PSTerminal.show(true);
+    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Start-ALEnvironment`);
+
+}
+
+export function StopEnvironment() {
+    const currentRoot = GetCurrentRootPath();
+    terminal.PSTerminal.show(true);
+    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Stop-ALEnvironment`);
+
+}
+
 
