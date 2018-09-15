@@ -29,10 +29,14 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.UnpublishTree',()=>{actions.UnpublishTree()}),
         vscode.commands.registerCommand('navertical.CreatePackage',()=>{actions.CreatePackage()}),
         vscode.commands.registerCommand('navertical.StopEnvironment',()=>{actions.StopEnvironment()}),
-        vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()})
+        vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()}),
+        vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()})
     ];
 
     context.subscriptions.concat(commandList);
+    // vscode.window.onDidCloseTerminal
+
+    vscode.window.onDidCloseTerminal((closedTerminal) => {terminal.TerminalClosed(closedTerminal)});
 }
 
 // this method is called when your extension is deactivated

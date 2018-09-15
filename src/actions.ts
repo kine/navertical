@@ -18,16 +18,18 @@ function GetCurrentRootPath():string
 
 export function InstallModules() {
 
-    terminal.PSTerminal.sendText(`install-module -Name NVRAppDevOps -Scope CurrentUser -Force -SkipPublisherCheck`);
-    terminal.PSTerminal.sendText(`install-module -Name navcontainerhelper -Scope CurrentUser -Force -SkipPublisherCheck`);
+    terminal.SendPSText(`install-module -Name NVRAppDevOps -Scope CurrentUser -Force -SkipPublisherCheck`);
+    terminal.SendPSText(`install-module -Name navcontainerhelper -Scope CurrentUser -Force -SkipPublisherCheck`);
+    terminal.SendPSText(`update-module -Name NVRAppDevOps`);
+    terminal.SendPSText(`update-module -Name navcontainerhelper`);
 
 }
 
 export function CompileTree() {
     terminal.PSTerminal.show(true);
     const currentRoot = GetCurrentRootPath();
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Download-ALSystemPackages -AlPackagesPath ${currentRoot}`);
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Compile-ALProjectTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot}`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Download-ALSystemPackages -AlPackagesPath ${currentRoot} -UseDefaultCred $True -Password 'something'`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Compile-ALProjectTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot}`);
 
 }
 
@@ -46,7 +48,7 @@ export function PublishTree() {
     if (vscode.workspace.getConfiguration('navertical.IgnoreVerification')) {
         skipVerification = 'true';
     }
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Publish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot} -SkipVerification ${skipVerification}`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Publish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot} -SkipVerification ${skipVerification}`);
 
 }
 
@@ -54,7 +56,15 @@ export function UnpublishTree() {
     terminal.PSTerminal.show(true);
     const currentRoot = GetCurrentRootPath();
 
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Unpublish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot})`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Unpublish-ALAppTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot})`);
+
+}
+
+export function GetConfiguration() {
+    terminal.PSTerminal.show(true);
+    const currentRoot = GetCurrentRootPath();
+
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot}`);
 
 }
 
@@ -66,27 +76,27 @@ export function CreatePackage() {
 export function CreateEnvironment() {
     const currentRoot = GetCurrentRootPath();
     terminal.PSTerminal.show(true);
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Init-ALEnvironment`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Init-ALEnvironment`);
 
 }
 
 export function RemoveEnvironment() {
     const currentRoot = GetCurrentRootPath();
     terminal.PSTerminal.show(true);
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Remove-ALEnvironment`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Remove-ALEnvironment`);
 
 }
 export function StartEnvironment() {
     const currentRoot = GetCurrentRootPath();
     terminal.PSTerminal.show(true);
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Start-ALEnvironment`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Start-ALEnvironment`);
 
 }
 
 export function StopEnvironment() {
     const currentRoot = GetCurrentRootPath();
     terminal.PSTerminal.show(true);
-    terminal.PSTerminal.sendText(`Read-ALConfiguration -Path ${currentRoot} | Stop-ALEnvironment`);
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Stop-ALEnvironment`);
 
 }
 

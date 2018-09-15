@@ -25,7 +25,8 @@
         "onCommand:navertical.UninstallTree",
         "onCommand:navertical.CreatePackage",
         "onCommand:navertical.PublishTree",
-        "onCommand:navertical.UnpublishTree"
+        "onCommand:navertical.UnpublishTree",
+        "onCommand:navertical.GetConfiguration"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -90,6 +91,11 @@
             {
                 "command": "navertical.StartEnvironment",
                 "title": "Start docker container",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.GetConfiguration",
+                "title": "Show the configuration",
                 "category": "Navertical"
             }            
         ]
