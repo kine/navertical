@@ -2,11 +2,12 @@
     "name": "navertical",
     "displayName": "NAVERTICA AL Extension",
     "description": "Navertica AL Extension for DevOps management and managing multi-level App dependencies",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "Kine",
     "engines": {
         "vscode": "^1.25.0"
     },
+    "license": "GPL 3.0",
     "categories": [
         "Other"
     ],

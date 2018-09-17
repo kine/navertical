@@ -43,7 +43,11 @@ If you want to have CI pipeline created in your Azure DevOps, just push the App 
 
 ## Requirements
 
-All needed powershell scripts are installed by the extension.
+All needed powershell scripts are installed by the extension ([navcontainerhelper](https://github.com/Microsoft/navcontainerhelper) and [NVRAppDevOps](https://github.com/kine/NVRAppDevOps)).
+
+## Related projects
+
+As a template for new AL App is used [MSDyn365BC_AppTemplate](https://github.com/kine/MSDyn365BC_AppTemplate) which uses [MSDyn365BC_Yaml](https://github.com/kine/MSDyn365BC_Yaml) for Azure Pipeline creation.
 
 ## Extension Settings
 
@@ -66,4 +70,3 @@ Updated dependencies
 ### 0.0.1
 
 Initial public release of the extension
-
