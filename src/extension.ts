@@ -4,6 +4,7 @@
 import * as vscode from 'vscode';
 import * as terminal from './terminal';
 import * as actions from './actions';
+import * as newapp from './newapp';
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 
 // this method is called when your extension is activated
@@ -19,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     let commandList = [
-        vscode.commands.registerCommand('navertical.InstallModules',()=>{actions.InstallModules()}),
+        //vscode.commands.registerCommand('navertical.InstallModules',()=>{actions.InstallModules()}),
         vscode.commands.registerCommand('navertical.CreateEnvironment',()=>{actions.CreateEnvironment()}),
         vscode.commands.registerCommand('navertical.RemoveEnvironment',()=>{actions.RemoveEnvironment()}),
         vscode.commands.registerCommand('navertical.CompileTree',()=>{actions.CompileTree()}),
@@ -30,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.CreatePackage',()=>{actions.CreatePackage()}),
         vscode.commands.registerCommand('navertical.StopEnvironment',()=>{actions.StopEnvironment()}),
         vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()}),
+        vscode.commands.registerCommand('navertical.InitNewAppFolder',()=>{newapp.InitNewAppFolder()}),
         vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()})
     ];
 

@@ -3,7 +3,7 @@
     "displayName": "NAVERTICA AL Extension",
     "description": "Navertica AL Extension for DevOps management and managing multi-level App dependencies",
     "version": "0.0.1",
-    "publisher": "Kamil Sacek (Kine)",
+    "publisher": "Kine",
     "engines": {
         "vscode": "^1.25.0"
     },
@@ -13,8 +13,18 @@
     "keywords": [
         "Kine","AL","NAVERTICA","MSDYN365BC","BusinessCentral"
     ],
+    "homepage": "https://github.com/kine/navertical/README.md",
+    "bugs": {
+        "url": "https://github.com/kine/navertical/issues",
+        "email": "kamilsacek@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kine/navertical.git"
+    },
     "icon": "img/navertica_logo_al.png",
     "activationEvents": [
+        "onLanguage:al",
         "onCommand:navertical.InstallModules",
         "onCommand:navertical.CreateEnvironment",
         "onCommand:navertical.RemoveEnvironment",
@@ -26,6 +36,7 @@
         "onCommand:navertical.CreatePackage",
         "onCommand:navertical.PublishTree",
         "onCommand:navertical.UnpublishTree",
+        "onCommand:navertical.InitNewAppFolder",
         "onCommand:navertical.GetConfiguration"
     ],
     "main": "./out/extension",
@@ -43,6 +54,16 @@
                         "type": "boolean",
                         "default": false,
                         "description": "If set, when installing app the signature of the app will not be verified."
+                    },
+                    "navertical.NewProjectRepository": {
+                        "type": "string",
+                        "default": "https://github.com/kine/MSDyn365BC_AppTemplate",
+                        "description": "GIT Repository which will be cloned when new App folder is created"
+                    },
+                    "navertical.NewProjectFolder": {
+                        "type": "string",
+                        "default": "C:\\Users\\ksacek.NAVERTICA\\Documents\\AL\\",
+                        "description": "GIT Repository which will be cloned when new App folder is created"
                     }
                 }
             }
@@ -69,11 +90,6 @@
                 "category": "Navertical"
             },
             {
-                "command": "navertical.CreatePackage",
-                "title": "Create Nuget Package",
-                "category": "Navertical"
-            },
-            {
                 "command": "navertical.PublishTree",
                 "title": "Publish App Tree",
                 "category": "Navertical"
@@ -95,7 +111,12 @@
             },
             {
                 "command": "navertical.GetConfiguration",
-                "title": "Show the configuration",
+                "title": "Show configuration",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.InitNewAppFolder",
+                "title": "GO!",
                 "category": "Navertical"
             }            
         ]
