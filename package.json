@@ -28,6 +28,10 @@
         "url": "https://github.com/kine/navertical.git"
     },
     "icon": "img/navertica_logo_al.png",
+    "galleryBanner": {
+        "color": "#eff1f3",
+        "theme": "dark"
+    },
     "activationEvents": [
         "onLanguage:al",
         "onCommand:navertical.InstallModules",
