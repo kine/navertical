@@ -2,7 +2,7 @@
     "name": "navertical",
     "displayName": "NAVERTICA AL Extension",
     "description": "Navertica AL Extension for DevOps management and managing multi-level App dependencies",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "Kine",
     "engines": {
         "vscode": "^1.25.0"
@@ -11,7 +11,11 @@
         "Other"
     ],
     "keywords": [
-        "Kine","AL","NAVERTICA","MSDYN365BC","BusinessCentral"
+        "Kine",
+        "AL",
+        "NAVERTICA",
+        "MSDYN365BC",
+        "BusinessCentral"
     ],
     "homepage": "https://github.com/kine/navertical/blob/master/README.md",
     "bugs": {
@@ -41,7 +45,7 @@
     ],
     "main": "./out/extension",
     "contributes": {
-        "configuration":[
+        "configuration": [
             {
                 "title": "Navertical configuration",
                 "properties": {
@@ -118,7 +122,7 @@
                 "command": "navertical.InitNewAppFolder",
                 "title": "GO!",
                 "category": "Navertical"
-            }            
+            }
         ]
     },
     "scripts": {
@@ -129,9 +133,9 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
+        "@types/mocha": "^2.2.48",
+        "@types/node": "^7.0.70",
+        "typescript": "^3.0.0",
+        "vscode": "^1.1.21"
     }
 }
