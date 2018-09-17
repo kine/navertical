@@ -12,30 +12,30 @@ NaverticAl is extension for every Microsoft Dynamics 365 Busines Central develop
 
 ## How to use
 
-1) Create new AL App folder by using `navertical:Go!`
+1. Create new AL App folder by using `navertical:Go!`
     This command will:
-    *Clone template repository without history (only last commit)
-    *Update the app.json with new id and app name (including dependency of TestApp)
-    *Rename Workspace file based on App name
-    *Open the Workspace
-2) Create Docker environment by using `navertical:Create environment`
+    * Clone template repository without history (only last commit)
+    * Update the app.json with new id and app name (including dependency of TestApp)
+    * Rename Workspace file based on App name
+    * Open the Workspace
+2. Create Docker environment by using `navertical:Create environment`
     This command will:
-    *Create new docker container with name and image based on the settings in Settings.ps1
-    *Make alc.exe compiler available from outside the container to allow compilation of the apps (may be will be changed later to compile inside container)
-    *Import Test objects in the container to allow run App Tests
-3) Add dependency Apps into Dependencies folder as GIT Submodules (preffered) or directly
-4) Compile the Apps with `navertical:Compile App Tree`
+    * Create new docker container with name and image based on the settings in Settings.ps1
+    * Make alc.exe compiler available from outside the container to allow compilation of the apps (may be will be changed later to compile inside container)
+    * Import Test objects in the container to allow run App Tests
+3. Add dependency Apps into Dependencies folder as GIT Submodules (preffered) or directly
+4. Compile the Apps with `navertical:Compile App Tree`
     This command will:
-    *Download system application app packages
-    *Download App packages for dependencies when source code is not found in the App folder tree (MISSING FUNCTIONALITY)
-    *Compile Apps in order to fullfill dependencies
-    *Sign the Apps with CodeSigning certificate if `navertical.CertPath` is set
-5) Publish the Apps with `navertical:Publish App Tree`
+    * Download system application app packages
+    * Download App packages for dependencies when source code is not found in the App folder tree (MISSING FUNCTIONALITY)
+    * Compile Apps in order to fullfill dependencies
+    * Sign the Apps with CodeSigning certificate if `navertical.CertPath` is set
+5. Publish the Apps with `navertical:Publish App Tree`
     This command will:
-    *Install the Apps in order to fullfill the dependencies
-    *Publish the Apps
-6) To unpublish the Apps you can use `navertical:Unpublish App Tree`
-7) To remove environment you can use `navertical:Remove Environment`
+    * Install the Apps in order to fullfill the dependencies
+    * Publish the Apps
+6. To unpublish the Apps you can use `navertical:Unpublish App Tree`
+7. To remove environment you can use `navertical:Remove Environment`
 
 ## Azure Pipeline
 
