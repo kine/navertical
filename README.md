@@ -4,11 +4,11 @@ NaverticAl is extension for every Microsoft Dynamics 365 Busines Central develop
 
 ## Features
 
-*Create new AL App folder from template by using "Navertical:Go!" command.
-*Create/Remove docker environment
-*Compile AL App with dependencies
-*Install AL Apps with dependencies
-*Uninstall AL Apps with dependencies
+* Create new AL App folder from template by using "Navertical:Go!" command.
+* Create/Remove docker environment
+* Compile AL App with dependencies
+* Install AL Apps with dependencies
+* Uninstall AL Apps with dependencies
 
 ## How to use
 
