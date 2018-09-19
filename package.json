@@ -2,7 +2,7 @@
     "name": "navertical",
     "displayName": "NaverticAL - NAVERTICA AL Extension",
     "description": "NaverticAL Extension for DevOps management and managing multi-level App dependencies for Microsoft Dynamics 365 Business Central",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "Kine",
     "engines": {
         "vscode": "^1.25.0"
@@ -28,10 +28,6 @@
         "url": "https://github.com/kine/navertical.git"
     },
     "icon": "img/navertica_logo_al.png",
-    "galleryBanner": {
-        "color": "#eff1f3",
-        "theme": "dark"
-    },
     "activationEvents": [
         "onLanguage:al",
         "onCommand:navertical.InstallModules",
