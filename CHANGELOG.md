@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+
+## [0.0.5] - 2018-09-18
+
 - Removed banner color
 - Updated color of icon
 
