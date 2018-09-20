@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- Support for containers hosted on another host
+
+## [0.0.6] - 2018-09-20
+
+- Fixed shallow clone problem when pushing the repo to new remote (Issue #3)
 
 ## [0.0.5] - 2018-09-18
 

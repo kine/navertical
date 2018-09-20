@@ -13,7 +13,7 @@ export async function InitNewAppFolder() {
     const newAppName = await GetNewAppName();
     const newRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
     CheckAndCreateFolder(newPath);
-    var params=['clone','--dissociate','--depth','1',newRepo,newPath];
+    var params=['clone','--dissociate',newRepo,newPath]; //,'--depth','1'
     console.log('Running git clone...');
     execFile('git',params,(error,stdout,stderr)=>{
         if (error) {
