@@ -70,6 +70,18 @@
                         "default": "C:\\Users\\ksacek.NAVERTICA\\Documents\\AL\\",
                         "description": "GIT Repository which will be cloned when new App folder is created"
                     }
+                    },
+                    "navertical.DockerHost": {
+                        "type": "string",
+                        "default": "localhost",
+                        "description": "Docker Host name to use"
+                    }
+                    },
+                    "navertical.DockerHostSharedFolder": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Shared folder of the docker host to use for exchanging files"
+                    }
                 }
             }
         ],
