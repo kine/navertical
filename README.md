@@ -14,7 +14,9 @@ NaverticAl is extension for every Microsoft Dynamics 365 Busines Central develop
 
 1. Create new AL App folder by using `navertical:Go!`
     This command will:
-    * Clone template repository without history (only last commit)
+    * Ask for empty folder path
+    * Ask for new App name (suggested the empty folder name)
+    * Clone template repository
     * Update the app.json with new id and app name (including dependency of TestApp)
     * Rename Workspace file based on App name
     * Open the Workspace

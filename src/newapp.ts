@@ -1,5 +1,6 @@
 'use strict';
 import * as vscode from "vscode";
+import Uri from 'vscode-uri'
 import * as terminal from './terminal';
 import * as path from "path";
 import * as fs from "fs";
@@ -10,12 +11,14 @@ import { execFile } from "child_process";
 
 export async function InitNewAppFolder() {
     console.log('InitNewAppFolder:Start');
+    console.log('InitNewAppFolder:GettingPath');
     const newPath = await GetNewAppPath();
     if (!newPath) {
         console.warn('No path entered');
         return;
     }
-    const newAppName = await GetNewAppName();
+    CheckIfEmpty(newPath);
+    const newAppName = await GetNewAppName(newPath);
     if (!newAppName) {
         console.warn('No app name entered');
         return;
@@ -37,6 +40,15 @@ export async function InitNewAppFolder() {
         UpdateAppTemplate(newPath,newAppName);
         OpenNewWorkspace(newPath,newAppName);
     });
+}
+
+function CheckIfEmpty(newPath:string) 
+{
+    var content = fs.readdirSync(newPath);
+    if (content.length) {
+        vscode.window.showErrorMessage(`Folder ${newPath} is not empty!`);
+        throw new Error('Fodler not empty');
+    }
 }
 
 function OpenNewWorkspace(newPath:string,newAppName:string)
@@ -98,19 +110,27 @@ function CheckAndCreateFolder(newPath: string) {
 }
 
 async function GetNewAppPath() {
-    const newPath = await vscode.window.showInputBox({
-            placeHolder: '<path for new App project>',
-            prompt: "Please, choose a path to a new empty folder (Press 'Enter' to confirm or 'Escape' to cancel)",
-            ignoreFocusOut: true
-        });
-    return newPath;
+    const uri = vscode.Uri.file(process.env['USERPROFILE']);
+    const options: vscode.OpenDialogOptions = {
+        openLabel: `Select folder`,
+        canSelectFolders: true,
+        canSelectFiles: false,
+        defaultUri: uri,
+        canSelectMany: false,
+        filters: {
+           'All files': ['*']
+       }
+    };
+    const newPath = await vscode.window.showOpenDialog(options);
+    return newPath[0].fsPath;
 }
 
-async function GetNewAppName() {
+async function GetNewAppName(newPath:string) {
+    const suggestedName = path.basename(newPath);
     const newAppName = await vscode.window.showInputBox({
         placeHolder: '<Name of the App>',
         prompt: "Please, enter the name of the new App (Press 'Enter' to confirm or 'Escape' to cancel)",
-        value: `ALApp1`,
+        value: suggestedName,
         ignoreFocusOut: true
     });
     return newAppName;

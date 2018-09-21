@@ -4,6 +4,10 @@
 
 - Support for containers hosted on another host
 
+## [0.0.8] - 2018-09-21
+
+- Changed the GO! flow - first select new empty folder for the app, app name will be suggested based on the name
+
 ## [0.0.7] - 2018-09-21
 
 - Fixed Input box to stay when changed focus in GO! function
