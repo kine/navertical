@@ -4,9 +4,10 @@
 
 - Support for containers hosted on another host
 
-## [0.0.9] - 2018-09-
+## [0.0.9] - 2018-09-21
 
 - Added connection to new repository in GO! if URL is known and initial Push is done
+- Better git error handling
 
 ## [0.0.8] - 2018-09-21
 
