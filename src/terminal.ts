@@ -11,8 +11,13 @@ export function ImportModules() {
 
 }
 export function InstallModules() {
-    SendPSText(`if (-not (Get-Module -ListAvailable -Name NVRAppDevOps)) { write-host "Installing module"; install-module -Name NVRAppDevOps -Scope CurrentUser -Force -SkipPublisherCheck} else {write-host "Updating module"; update-module -Name NVRAppDevOps}`);
-    SendPSText(`if (-not (Get-Module -ListAvailable -Name navcontainerhelper)) {  write-host "Installing module";install-module -Name navcontainerhelper -Scope CurrentUser -Force -SkipPublisherCheck} else {write-host "Updating module"; update-module -Name navcontainerhelper}`);
+    SendPSText(`if (-not (Get-Module -ListAvailable -Name NVRAppDevOps)) { write-host "Installing module"; install-module -Name NVRAppDevOps -Scope CurrentUser -Force -SkipPublisherCheck}`); // else {write-host "Updating module"; update-module -Name NVRAppDevOps}
+    SendPSText(`if (-not (Get-Module -ListAvailable -Name navcontainerhelper)) {  write-host "Installing module";install-module -Name navcontainerhelper -Scope CurrentUser -Force -SkipPublisherCheck}`); // else {write-host "Updating module"; update-module -Name navcontainerhelper}
+}
+
+export function UpdateModules() {
+    SendPSText(`update-module -Name NVRAppDevOps`);
+    SendPSText(`update-module -Name navcontainerhelper`);
 }
 
 export function TerminalClosed(terminal: vscode.Terminal)

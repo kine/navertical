@@ -8,6 +8,7 @@
 
 - Fixed Input box to stay when changed focus in GO! function
 - Added Error message when git clone ends with error (e.g. when git is not installed)
+- Added `Update modules` command and remove automatic update on console initialization
 
 ## [0.0.6] - 2018-09-20
 

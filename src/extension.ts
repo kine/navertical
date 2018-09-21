@@ -21,6 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
     // The commandId parameter must match the command field in package.json
     let commandList = [
         //vscode.commands.registerCommand('navertical.InstallModules',()=>{actions.InstallModules()}),
+        vscode.commands.registerCommand('navertical.UpdateModules',()=>{terminal.UpdateModules()}),
         vscode.commands.registerCommand('navertical.CreateEnvironment',()=>{actions.CreateEnvironment()}),
         vscode.commands.registerCommand('navertical.RemoveEnvironment',()=>{actions.RemoveEnvironment()}),
         vscode.commands.registerCommand('navertical.CompileTree',()=>{actions.CompileTree()}),
