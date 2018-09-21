@@ -16,6 +16,7 @@ NaverticAl is extension for every Microsoft Dynamics 365 Busines Central develop
     This command will:
     * Ask for empty folder path
     * Ask for new App name (suggested the empty folder name)
+    * Ask for new Repository URL
     * Clone template repository
     * Update the app.json with new id and app name (including dependency of TestApp)
     * Rename Workspace file based on App name

@@ -7,7 +7,25 @@ import * as fs from "fs";
 import * as guid from './guid';
 
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
-import { execFile } from "child_process";
+import { execFile, execFileSync, spawnSync } from "child_process";
+import { Stream } from "stream";
+import { homedir } from "os";
+
+function ExecGitCommand(params:string[],newPath:string='')
+{
+    if (!newPath) {
+        newPath = process.env['HOMEPATH'];
+    }
+    var result = spawnSync('git.exe',params,{cwd:newPath,env:process.env});//,{stdio:['ignore',outstr,errstr]}
+    if (result.error) {
+       console.error('Error:',result.stderr);
+       vscode.window.showErrorMessage(`Error when running git ${params[0]}: ${result.error.message}. \nMay be git was not found? (if  spawn git ENOENT)`);
+       throw result.error;
+    }
+    console.log(`${result.stdout.toString()}`);
+    console.log(`${result.stderr.toString()}`);
+    return result;
+}
 
 export async function InitNewAppFolder() {
     console.log('InitNewAppFolder:Start');
@@ -23,23 +41,23 @@ export async function InitNewAppFolder() {
         console.warn('No app name entered');
         return;
     }
+    const newRepoName = await GetNewRepoName();
     console.log('InitNewAppFolder:GettingConfiguration');
-    const newRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
+    const templateRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
     console.log('InitNewAppFolder:CreatingFolder');
     CheckAndCreateFolder(newPath);
     console.log('InitNewAppFolder:Running git clone');
-    var params=['clone','--dissociate',newRepo,newPath]; //,'--depth','1'
     console.log('Running git clone...');
-    execFile('git',params,(error,stdout,stderr)=>{
-        if (error) {
-            console.error('stderr',stderr);
-            vscode.window.showErrorMessage(`Error when running git clone: ${error.message}. \nMay be git was not found? (if  spawn git ENOENT)`);
-            throw error;
-        }
-        console.log('stdout',stdout)
-        UpdateAppTemplate(newPath,newAppName);
-        OpenNewWorkspace(newPath,newAppName);
-    });
+    ExecGitCommand(['clone','--dissociate',templateRepo,newPath]);
+    UpdateAppTemplate(newPath,newAppName);
+    try {
+        RenameRepo(newPath,newRepoName)
+        AddRemote(newPath,newRepoName);
+    } catch {
+
+    }
+    OpenNewWorkspace(newPath,newAppName);
+    //});
 }
 
 function CheckIfEmpty(newPath:string) 
@@ -64,6 +82,37 @@ function UpdateAppTemplate(newPath: string,newAppName: string)
     UpdateTestAppJson(newPath,newAppName,appGuid);
 }
 
+function RenameRepo(newPath: string,newRepoName: string)
+{
+    console.log('ReconnectRepo:Running git rename');
+    ExecGitCommand(['remote','rename','origin','template'],newPath);
+}
+
+function DisconnectBranch(newPath: string)
+{
+    console.log('DisconnectBranch:Running git branch --unset-upstream');
+    ExecGitCommand(['branch','--unset-upstream'],newPath);
+}
+
+function ReconnectBranch(newPath: string)
+{
+    console.log('ReconnectBranch:Running git push -u origin');
+    //ExecGitCommand(['branch','--set-upstream-to','origin'],newPath);
+    ExecGitCommand(['push','--set-upstream','origin','master'],newPath);
+}
+
+function AddRemote(newPath: string,newRepoName: string)
+{
+    if (newRepoName) {
+        console.log('AddRemote:Running git add');
+        ExecGitCommand(['remote','add','origin',newRepoName],newPath);
+        DisconnectBranch(newPath);
+        ReconnectBranch(newPath);
+    } else {
+        DisconnectBranch(newPath);
+    }
+}
+
 function UpdateMainAppJson(newPath:string,newAppName:string)
 {
     const newGuid = guid.createGuid();
@@ -73,7 +122,7 @@ function UpdateMainAppJson(newPath:string,newAppName:string)
     appJson.id = newGuid;
     appJson.name = newAppName;
     appJson.brief = newAppName;
-    fs.writeFile(appJsonPath,JSON.stringify(appJson,null,2),(error) => {console.log(`Cannot write file ${appJsonPath}`);});
+    fs.writeFileSync(appJsonPath,JSON.stringify(appJson,null,2),(error) => {console.log(`Cannot write file ${appJsonPath}`);});
     return newGuid;
 }
 
@@ -88,7 +137,7 @@ function UpdateTestAppJson(newPath:string,newAppName:string,appGuid:string)
     appJson.brief = `${newAppName}.Test`;
     appJson.dependencies[0].appId = appGuid;
     appJson.dependencies[0].name = newAppName;
-    fs.writeFile(appJsonPath,JSON.stringify(appJson,null,2),(error) => {console.log(`Cannot write file ${appJsonPath}`);});
+    fs.writeFileSync(appJsonPath,JSON.stringify(appJson,null,2),(error) => {console.log(`Cannot write file ${appJsonPath}`);});
     return newGuid;
 }
 
@@ -97,7 +146,7 @@ function RenameWorkspace(newPath: string,newAppName: string)
     var fs= require('fs');
     const oldWorkspaceFile = path.join(newPath,'\\MSDyn365BC_Base.code-workspace');
     const newWorkspaceFile = path.join(newPath,`\\${newAppName}.code-workspace`);
-    fs.rename(oldWorkspaceFile,newWorkspaceFile);
+    fs.renameSync(oldWorkspaceFile,newWorkspaceFile);
 }
 
 function CheckAndCreateFolder(newPath: string) {
@@ -134,4 +183,13 @@ async function GetNewAppName(newPath:string) {
         ignoreFocusOut: true
     });
     return newAppName;
+}
+
+async function GetNewRepoName() {
+    const newRepoName = await vscode.window.showInputBox({
+        placeHolder: '<https:///dev.azure.com/account/project/_git/repo>',
+        prompt: "Please, enter URL of your target GIT repository (ESC or empty to skip)",
+        ignoreFocusOut: true
+    });
+    return newRepoName;
 }
