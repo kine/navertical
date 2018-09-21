@@ -9,15 +9,28 @@ import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 import { execFile } from "child_process";
 
 export async function InitNewAppFolder() {
+    console.log('InitNewAppFolder:Start');
     const newPath = await GetNewAppPath();
+    if (!newPath) {
+        console.warn('No path entered');
+        return;
+    }
     const newAppName = await GetNewAppName();
+    if (!newAppName) {
+        console.warn('No app name entered');
+        return;
+    }
+    console.log('InitNewAppFolder:GettingConfiguration');
     const newRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
+    console.log('InitNewAppFolder:CreatingFolder');
     CheckAndCreateFolder(newPath);
+    console.log('InitNewAppFolder:Running git clone');
     var params=['clone','--dissociate',newRepo,newPath]; //,'--depth','1'
     console.log('Running git clone...');
     execFile('git',params,(error,stdout,stderr)=>{
         if (error) {
             console.error('stderr',stderr);
+            vscode.window.showErrorMessage(`Error when running git clone: ${error.message}. \nMay be git was not found? (if  spawn git ENOENT)`);
             throw error;
         }
         console.log('stdout',stdout)
@@ -77,7 +90,9 @@ function RenameWorkspace(newPath: string,newAppName: string)
 
 function CheckAndCreateFolder(newPath: string) {
     var fs = require('fs');
+    console.log('CheckAndCreateFolder:Checking path {0}',newPath);
     if (!fs.existsSync(newPath)) {
+        console.log('CheckAndCreateFolder:Creating path {0}',newPath);
         fs.mkdirSync(newPath);
     }
 }
@@ -85,7 +100,8 @@ function CheckAndCreateFolder(newPath: string) {
 async function GetNewAppPath() {
     const newPath = await vscode.window.showInputBox({
             placeHolder: '<path for new App project>',
-            prompt: "Please, choose a path to a new empty folder (Press 'Enter' to confirm or 'Escape' to cancel)"
+            prompt: "Please, choose a path to a new empty folder (Press 'Enter' to confirm or 'Escape' to cancel)",
+            ignoreFocusOut: true
         });
     return newPath;
 }
@@ -94,7 +110,8 @@ async function GetNewAppName() {
     const newAppName = await vscode.window.showInputBox({
         placeHolder: '<Name of the App>',
         prompt: "Please, enter the name of the new App (Press 'Enter' to confirm or 'Escape' to cancel)",
-        value: `ALApp1`
+        value: `ALApp1`,
+        ignoreFocusOut: true
     });
     return newAppName;
 }

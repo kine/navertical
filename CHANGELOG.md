@@ -4,6 +4,11 @@
 
 - Support for containers hosted on another host
 
+## [0.0.7] - 2018-09-21
+
+- Fixed Input box to stay when changed focus in GO! function
+- Added Error message when git clone ends with error (e.g. when git is not installed)
+
 ## [0.0.6] - 2018-09-20
 
 - Fixed shallow clone problem when pushing the repo to new remote (Issue #3)
