@@ -3,6 +3,9 @@
 ## [Unreleased]
 
 - Support for containers hosted on another host
+## [0.0.10] -
+
+- Added `Force Download System Packages` command
 
 ## [0.0.9] - 2018-09-21
 

@@ -43,7 +43,8 @@
         "onCommand:navertical.UnpublishTree",
         "onCommand:navertical.InitNewAppFolder",
         "onCommand:navertical.UpdateModules",
-        "onCommand:navertical.GetConfiguration"
+        "onCommand:navertical.GetConfiguration",
+        "onCommand:navertical.ForceDownload"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -128,6 +129,11 @@
             {
                 "command": "navertical.InitNewAppFolder",
                 "title": "GO!",
+                "category": "Navertical"
+            },
+            {
+                "command": "navertical.ForceDownload",
+                "title": "Download System Packages",
                 "category": "Navertical"
             }
         ]

@@ -30,6 +30,13 @@ export function CompileTree() {
 
 }
 
+export function ForceDownload() {
+    terminal.PSTerminal.show(true);
+    const currentRoot = GetCurrentRootPath();
+    terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Download-ALSystemPackages -AlPackagesPath ${currentRoot} -UseDefaultCred $True -Password 'something' -Force`);
+    //terminal.SendPSText(`Read-ALConfiguration -Path ${currentRoot} | Compile-ALProjectTree -OrderedApps (Get-ALAppOrder -Path ${currentRoot}) -PackagesPath ${currentRoot}`);
+}
+
 export function InstallTree() {
 
 }

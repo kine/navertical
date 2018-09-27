@@ -33,7 +33,8 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.StopEnvironment',()=>{actions.StopEnvironment()}),
         vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()}),
         vscode.commands.registerCommand('navertical.InitNewAppFolder',()=>{newapp.InitNewAppFolder()}),
-        vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()})
+        vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()}),
+        vscode.commands.registerCommand('navertical.ForceDownload',()=>{actions.ForceDownload()})
     ];
 
     context.subscriptions.concat(commandList);
