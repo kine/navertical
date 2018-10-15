@@ -5,7 +5,9 @@ import * as vscode from 'vscode';
 import * as terminal from './terminal';
 import * as actions from './actions';
 import * as newapp from './newapp';
+import * as remote from './remote';
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
+import { removeListener } from 'cluster';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -34,7 +36,8 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.StartEnvironment',()=>{actions.StartEnvironment()}),
         vscode.commands.registerCommand('navertical.InitNewAppFolder',()=>{newapp.InitNewAppFolder()}),
         vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()}),
-        vscode.commands.registerCommand('navertical.ForceDownload',()=>{actions.ForceDownload()})
+        vscode.commands.registerCommand('navertical.ForceDownload',()=>{actions.ForceDownload()}),
+        vscode.commands.registerCommand('navertical.SetupRemoteDockerFolder',()=>{remote.SetupRemoteDockerFolder()})
     ];
 
     context.subscriptions.concat(commandList);
