@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 - Support for containers hosted on another host
+- Removed update of navcontainerhelper because it is updated with NVRAppDevOps automatically
+
+## [0.0.11]
+
+- Fixed module order load to first work with navcontainerhelper
+
 ## [0.0.10] -
 
 - Added `Force Download System Packages` command

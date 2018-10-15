@@ -1,7 +1,7 @@
 'use strict';
 import * as vscode from "vscode";
 
-export var PSTerminal = vscode.window.createTerminal(`NaverticAl`);
+export var PSTerminal = vscode.window.createTerminal(`NaverticAl`,`C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`);
 
 export function ImportModules() {
     InstallModules();
@@ -16,8 +16,8 @@ export function InstallModules() {
 }
 
 export function UpdateModules() {
-    SendPSText(`update-module -Name navcontainerhelper`);
-    SendPSText(`update-module -Name NVRAppDevOps`);
+    //SendPSText(`update-module -Name navcontainerhelper -Force`);
+    SendPSText(`update-module -Name NVRAppDevOps -Force`);
 }
 
 export function TerminalClosed(terminal: vscode.Terminal)
@@ -46,5 +46,6 @@ export function SendPSText(text: string)
     //if () {
     //    PSTerminal = vscode.window.createTerminal(`NaverticAl`);
     //}
+    console.log(`NaverticAL PS: ${text}`);
     PSTerminal.sendText(text);
 }
