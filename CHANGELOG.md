@@ -3,6 +3,8 @@
 ## [Unreleased]
 
 - Support for containers hosted on another host
+- Added `NaverticAL:Setup Remote Docker Folder` (fixed params yet)
+- Added support for remote docker into Read-ALConfiguration calls
 - Removed update of navcontainerhelper because it is updated with NVRAppDevOps automatically
 
 ## [0.0.11]
