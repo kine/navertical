@@ -30,7 +30,6 @@
     "icon": "img/navertica_logo_al.png",
     "activationEvents": [
         "onLanguage:al",
-        "onCommand:navertical.InstallModules",
         "onCommand:navertical.CreateEnvironment",
         "onCommand:navertical.RemoveEnvironment",
         "onCommand:navertical.StopEnvironment",
