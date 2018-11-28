@@ -33,7 +33,7 @@ export function TerminalClosed(terminal: vscode.Terminal)
         vscode.window.showWarningMessage('NaverticAl terminal was closed.',optionRestart,optionCancel).then(
             option => {
                 if (option===optionRestart) {
-                    PSTerminal = vscode.window.createTerminal(`NaverticAl`);
+                    PSTerminal = vscode.window.createTerminal(`NaverticAl`,`C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`);
                     ImportModules();
                 }
             }

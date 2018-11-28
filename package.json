@@ -91,11 +91,6 @@
         ],
         "commands": [
             {
-                "command": "navertical.InstallModules",
-                "title": "Install Modules",
-                "category": "Navertical"
-            },
-            {
                 "command": "navertical.UpdateModules",
                 "title": "Update Powershell modules",
                 "category": "Navertical"
