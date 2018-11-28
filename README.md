@@ -42,7 +42,7 @@ NaverticAl is extension for every Microsoft Dynamics 365 Busines Central develop
 
 ## Azure Pipeline
 
-If you want to have CI pipeline created in your Azure DevOps, just push the App repository to your Azure Repository. If the Pipeline is not created automaticaly, go to your Azure Build Pipelines, click New, and select the repo. The Pipeline will be created automatically for you. If you want to change something in the pipeline, edit the  `.vsts-ci.yml` file accordingly. By pushing new version to the Azure Repo, new definition of the pipeline will be automatically used.
+If you want to have CI pipeline created in your Azure DevOps, just push the App repository to your Azure Repository. If the Pipeline is not created automaticaly, go to your Azure Build Pipelines, click New, and select the repo. The Pipeline will be created automatically for you. If you want to change something in the pipeline, edit the  `Azure-pipelines.yml` file accordingly. By pushing new version to the Azure Repo, new definition of the pipeline will be automatically used.
 
 ## Requirements
 
@@ -58,13 +58,21 @@ This extension contributes the following settings:
 
 * `navertical.CertPath`: set to path to CodeSigning certificate
 * `navertical.IgnoreVerification`: set to false to enable signature verification when installing the apps
-* `navertical.NewProjectRepository`: URL of the git repository to use when creating new App folder
 
 ## Known Issues
 
 Missing possibility to pull missing dependencies from package server.
 
 ## Release Notes
+
+### 0.1.1
+
+Removed unused configurations
+Downgraded dependency event-stream to version 3.3.4 to remove malicious dependency
+
+### 0.1.0
+
+Fixed bug when reopening NaverticAl terminal, it used default terminal shell instead powershell (if different used)
 
 ### 0.0.2
 

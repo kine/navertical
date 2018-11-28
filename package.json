@@ -65,26 +65,6 @@
                         "type": "string",
                         "default": "https://github.com/kine/MSDyn365BC_AppTemplate",
                         "description": "GIT Repository which will be cloned when new App folder is created"
-                    },
-                    "navertical.NewProjectFolder": {
-                        "type": "string",
-                        "default": "C:\\Users\\ksacek.NAVERTICA\\Documents\\AL\\",
-                        "description": "GIT Repository which will be cloned when new App folder is created"
-                    },
-                    "navertical.DockerHost": {
-                        "type": "string",
-                        "default": "localhost",
-                        "description": "Host name of the remote docker host"
-                    },
-                    "navertical.DockerHostUseSSL": {
-                        "type": "boolean",
-                        "default": false,
-                        "description": "Set if remote docker host uses SSL connection"
-                    },
-                    "navertical.DockerHostFolderMap": {
-                        "type": "string",
-                        "default": "s:\\;c:\\source",
-                        "description": "Mapping between docker host local folder and local path used in VSCode (in form '<localpath>;<remotelocalpath>')"
                     }
                 }
             }
@@ -166,6 +146,7 @@
         "vscode": "^1.1.21"
     },
     "dependencies": {
+        "event-stream": "^3.3.4",
         "vscode-uri": "^1.0.6"
     }
 }
