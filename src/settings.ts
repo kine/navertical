@@ -24,20 +24,23 @@ export function GetCurrentRootPath():string
 
 export function IsRemoteDocker():boolean
 {
-    const remoteHost = vscode.workspace.getConfiguration().get('navertical.DockerHost').toString();
-    return (remoteHost.toLowerCase()!=='localhost');
+    //const remoteHost = vscode.workspace.getConfiguration().get('navertical.DockerHost').toString();
+    //return (remoteHost.toLowerCase()!=='localhost');
+    return false;
 }
 
 export function GetRemoteDockerName():string
 {
-    const remoteHost = vscode.workspace.getConfiguration().get('navertical.DockerHost').toString();
-    return remoteHost;
+    //const remoteHost = vscode.workspace.getConfiguration().get('navertical.DockerHost').toString();
+    //return remoteHost;
+    return '';
 }
 
 export function GetRemoteDockerSSL():boolean
 {
-    const remoteHostSSL = <boolean>vscode.workspace.getConfiguration().get('navertical.DockerHostUseSSL');
-    return remoteHostSSL;
+    //const remoteHostSSL = <boolean>vscode.workspace.getConfiguration().get('navertical.DockerHostUseSSL');
+    //return remoteHostSSL;
+    return false;
 }
 
 export function GetRemoteMapping():string
