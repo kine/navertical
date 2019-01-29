@@ -11,15 +11,15 @@ import { execFile } from "child_process";
 export function GetCurrentRootPath():string
 {
     if (vscode.workspace.workspaceFolders.length === 1) {
-        return vscode.workspace.workspaceFolders[0].uri.fsPath+'\\..';
+        return '"'+vscode.workspace.workspaceFolders[0].uri.fsPath+'\\.."';
     }
     if (vscode.window.activeTextEditor===undefined) {
-        return vscode.workspace.workspaceFolders[0].uri.fsPath+'\\..';
+        return '"'+vscode.workspace.workspaceFolders[0].uri.fsPath+'\\.."';
     }
     const fileUri = vscode.window.activeTextEditor.document.uri;
     const workspace = vscode.workspace.getWorkspaceFolder(fileUri);
     console.log(`Navertical: current workspace folder is: ${workspace.uri.fsPath}`);
-    return workspace.uri.fsPath+'\\..';
+    return '"'+workspace.uri.fsPath+'\\.."';
 }
 
 export function IsRemoteDocker():boolean
