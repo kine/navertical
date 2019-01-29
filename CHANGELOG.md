@@ -1,6 +1,12 @@
 # Change Log
 
 ## [Unreleased]
+## [0.1.3] - 2019-01-29
+- Fixed bug when repository have spaces in name
+
+## [0.1.2] - 2018-11-29
+- cleanup
+- starting powershell console by default
 
 ## [0.0.10] - 2018-10-16
 
