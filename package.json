@@ -126,6 +126,11 @@
                 "category": "Navertical"
             },
             {
+                "command": "navertical.RunTests",
+                "title": "Run Tests",
+                "category": "Navertical"
+            },
+            {
                 "command": "navertical.SetupRemoteDockerFolder",
                 "title": "Setup Remote Docker Folder",
                 "category": "Navertical"

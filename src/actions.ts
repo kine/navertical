@@ -17,6 +17,13 @@ export function CompileTree() {
 
 }
 
+export function RunTests() {
+    terminal.PSTerminal.show(true);
+    const currentRoot = settings.GetCurrentRootPath();
+    terminal.SendPSText(`${settings.GetConfigCommand(false)} | Run-ALTestInContainer -detailed`);
+
+}
+
 export function ForceDownload() {
     terminal.PSTerminal.show(true);
     const currentRoot = settings.GetCurrentRootPath();
