@@ -43,7 +43,8 @@
         "onCommand:navertical.InitNewAppFolder",
         "onCommand:navertical.UpdateModules",
         "onCommand:navertical.GetConfiguration",
-        "onCommand:navertical.ForceDownload"
+        "onCommand:navertical.ForceDownload",
+        "onCommand:navertical.RunTests"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -65,7 +66,18 @@
                         "type": "string",
                         "default": "https://github.com/kine/MSDyn365BC_AppTemplate",
                         "description": "GIT Repository which will be cloned when new App folder is created"
+                    },
+                    "navertical.JSONConfigFile": {
+                        "type":"string",
+                        "default": "",
+                        "description": "Relative path and file name with the JSON configuration for NaverticAl"
+                    },
+                    "navertical.JSONConfigProfile": {
+                        "type": "string",
+                        "default": "default",
+                        "description": "Profile from JSON configuration to use"
                     }
+
                 }
             }
         ],

@@ -49,12 +49,24 @@ export function GetRemoteMapping():string
     return remoteHostMapping;
 }
 
+export function GetJSONConfigPath():string
+{
+    const JSONConfig = vscode.workspace.getConfiguration().get('navertical.JSONConfigFile').toString();
+    return JSONConfig;
+}
+
+export function GetJSONConfigProfile():string
+{
+    const JSONConfigProfile = vscode.workspace.getConfiguration().get('navertical.JSONConfigProfile').toString();
+    return JSONConfigProfile;
+}
+
 export function GetConfigCommand(remote:boolean):string
 {
     const currentRoot = GetCurrentRootPath();
     if (!remote || !IsRemoteDocker()) {
-        return `Read-ALConfiguration -Path ${currentRoot}`
+        return `Read-ALConfiguration -Path ${currentRoot} -SettingsFileName '${GetJSONConfigPath()}' -Profile '${GetJSONConfigProfile()}'`
     } else {
-        return `Read-ALConfiguration -Path ${currentRoot} -DockerHost ${GetRemoteDockerName()} -DockerHostSSL $${GetRemoteDockerSSL()} -PathMapString '${GetRemoteMapping()}'`
+        return `Read-ALConfiguration -Path ${currentRoot} -SettingsFileName '${GetJSONConfigPath()}' -Profile '${GetJSONConfigProfile()}' -DockerHost ${GetRemoteDockerName()} -DockerHostSSL $${GetRemoteDockerSSL()} -PathMapString '${GetRemoteMapping()}'`
     }
 }
