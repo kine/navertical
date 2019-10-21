@@ -46,9 +46,12 @@ export async function InitNewAppFolder() {
     const templateRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
     console.log('InitNewAppFolder:CreatingFolder');
     CheckAndCreateFolder(newPath);
+
+    const selectedBranch = await SelectBranch(templateRepo).then(result => result);
+
     console.log('InitNewAppFolder:Running git clone');
     console.log('Running git clone...');
-    ExecGitCommand(['clone','--dissociate',templateRepo,newPath]);
+    ExecGitCommand(['clone', '-b', selectedBranch, '--single-branch', templateRepo,newPath]);
     UpdateAppTemplate(newPath,newAppName);
     try {
         RenameRepo(newPath,newRepoName)
@@ -192,4 +195,38 @@ async function GetNewRepoName() {
         ignoreFocusOut: true
     });
     return newRepoName;
+}
+
+function GetBranches(path: string) {
+    const branchPrefix = 'NVRTEMPLATE';
+    spawnSync('git', ['remote', 'add', branchPrefix, path], { env:process.env }); // addind remote
+    spawnSync('git', ['fetch', branchPrefix], { env:process.env });
+    
+    let branches = spawnSync('git', ['branch', '-r', '-l', `${branchPrefix}/*`], { env:process.env })
+        .stdout
+        .toString()
+        .split('\n'); // listing branches
+
+    spawnSync('git', ['remote', 'rm', branchPrefix]); // removing remote
+   
+    branches = branches.filter(branch => branch.length > 0);
+
+    for (let i = 0; i < branches.length; i++) {
+        branches[i] = branches[i].replace(`${branchPrefix}/`, '').trim();
+    }
+
+    return branches;
+}
+
+async function SelectBranch(path: string) {
+    const branches = GetBranches(path);
+    const result = await vscode.window.showQuickPick(branches, {
+        placeHolder: 'Choose Branch',
+        onDidSelectItem: item => item
+    });
+
+    if (!result) {
+        return branches[0];
+    }
+    return result;
 }

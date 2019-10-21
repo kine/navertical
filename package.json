@@ -159,7 +159,7 @@
         "@types/mocha": "^2.2.48",
         "@types/node": "^7.0.70",
         "typescript": "^3.0.0",
-        "vscode": "^1.1.21"
+        "vscode": "^1.1.36"
     },
     "dependencies": {
         "event-stream": "^3.3.4",
