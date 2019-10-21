@@ -48,10 +48,14 @@ export async function InitNewAppFolder() {
     CheckAndCreateFolder(newPath);
 
     const selectedBranch = await SelectBranch(templateRepo).then(result => result);
+    if (!selectedBranch) {
+        console.warn('No branch selected');
+        return;
+    }
 
     console.log('InitNewAppFolder:Running git clone');
     console.log('Running git clone...');
-    ExecGitCommand(['clone', '-b', selectedBranch, '--single-branch', templateRepo,newPath]);
+    ExecGitCommand(['clone', '-b', selectedBranch, '--single-branch', templateRepo, newPath]);
     UpdateAppTemplate(newPath,newAppName);
     try {
         RenameRepo(newPath,newRepoName)
@@ -220,13 +224,18 @@ function GetBranches(path: string) {
 
 async function SelectBranch(path: string) {
     const branches = GetBranches(path);
+
+    if (branches.length === 1) {
+        return branches[0];
+    }
+
     const result = await vscode.window.showQuickPick(branches, {
         placeHolder: 'Choose Branch',
         onDidSelectItem: item => item
     });
 
     if (!result) {
-        return branches[0];
+        return null;
     }
     return result;
 }
