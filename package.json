@@ -163,6 +163,8 @@
     },
     "dependencies": {
         "event-stream": "^3.3.4",
+        "fs-extra": "^8.1.0",
+        "pure-uuid": "^1.5.7",
         "vscode-uri": "^1.0.6"
     }
 }

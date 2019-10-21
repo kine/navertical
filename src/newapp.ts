@@ -5,11 +5,16 @@ import * as terminal from './terminal';
 import * as path from "path";
 import * as fs from "fs";
 import * as guid from './guid';
+import 'pure-uuid';
+import * as os from 'os';
+import * as fse from 'fs-extra';
 
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 import { execFile, execFileSync, spawnSync } from "child_process";
 import { Stream } from "stream";
 import { homedir } from "os";
+import { format } from "util";
+import UUID from "pure-uuid";
 
 function ExecGitCommand(params:string[],newPath:string='')
 {
@@ -202,21 +207,22 @@ async function GetNewRepoName() {
 }
 
 function GetBranches(path: string) {
-    const branchPrefix = 'NVRTEMPLATE';
-    spawnSync('git', ['remote', 'add', branchPrefix, path], { env:process.env }); // addind remote
-    spawnSync('git', ['fetch', branchPrefix], { env:process.env });
+    const folderPath = CreateTempFolder();
+    const BRANCH_PREFIX = 'NVRTEMPLATE';
+    ExecGitCommand(['remote', 'add', BRANCH_PREFIX, path], folderPath);
+    ExecGitCommand(['fetch', BRANCH_PREFIX], folderPath);
     
-    let branches = spawnSync('git', ['branch', '-r', '-l', `${branchPrefix}/*`], { env:process.env })
+    let branches = ExecGitCommand(['branch', '-r', '-l', `${BRANCH_PREFIX}/*`], folderPath)
         .stdout
         .toString()
         .split('\n'); // listing branches
 
-    spawnSync('git', ['remote', 'rm', branchPrefix]); // removing remote
-   
+    ExecGitCommand(['remote', 'rm', BRANCH_PREFIX]); // removing remote
+
     branches = branches.filter(branch => branch.length > 0);
 
     for (let i = 0; i < branches.length; i++) {
-        branches[i] = branches[i].replace(`${branchPrefix}/`, '').trim();
+        branches[i] = branches[i].replace(`${BRANCH_PREFIX}/`, '').trim();
     }
 
     return branches;
@@ -231,6 +237,7 @@ async function SelectBranch(path: string) {
 
     const result = await vscode.window.showQuickPick(branches, {
         placeHolder: 'Choose Branch',
+        ignoreFocusOut: true,
         onDidSelectItem: item => item
     });
 
@@ -238,4 +245,15 @@ async function SelectBranch(path: string) {
         return null;
     }
     return result;
+}
+
+function CreateTempFolder() {
+    const id = new UUID(4).format();
+    const directory = path.join(os.tmpdir(), id);
+    
+    fse.mkdirs(directory).then(() => {
+        console.log(`Created directory: ${directory}`);
+    });
+
+    return directory;
 }
