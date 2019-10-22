@@ -209,21 +209,24 @@ async function GetNewRepoName() {
 function GetBranches(path: string) {
     const folderPath = CreateTempFolder();
     const BRANCH_PREFIX = 'NVRTEMPLATE';
+
     ExecGitCommand(['remote', 'add', BRANCH_PREFIX, path], folderPath);
-    ExecGitCommand(['fetch', BRANCH_PREFIX], folderPath);
+    ExecGitCommand(['fetch', BRANCH_PREFIX], folderPath); 
     
     let branches = ExecGitCommand(['branch', '-r', '-l', `${BRANCH_PREFIX}/*`], folderPath)
         .stdout
         .toString()
         .split('\n'); // listing branches
 
-    ExecGitCommand(['remote', 'rm', BRANCH_PREFIX]); // removing remote
+    ExecGitCommand(['remote', 'rm', BRANCH_PREFIX], folderPath); // removing remote
 
     branches = branches.filter(branch => branch.length > 0);
 
     for (let i = 0; i < branches.length; i++) {
         branches[i] = branches[i].replace(`${BRANCH_PREFIX}/`, '').trim();
     }
+
+    RemoveTempFolder(folderPath).then(() => console.log('Branches listed'));
 
     return branches;
 }
@@ -249,11 +252,19 @@ async function SelectBranch(path: string) {
 
 function CreateTempFolder() {
     const id = new UUID(4).format();
-    const directory = path.join(os.tmpdir(), id);
+    const directory = path.join(os.tmpdir(), `Navertica\\NaverticAL\\${id}`);
     
     fse.mkdirs(directory).then(() => {
         console.log(`Created directory: ${directory}`);
     });
 
     return directory;
+}
+
+async function RemoveTempFolder(path: string) {
+    fse.remove(path).then(() => {
+        console.log(`Folder ${path} deleted`);
+    }).catch(err => {
+        console.error(err);
+    });
 }
