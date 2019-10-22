@@ -60,11 +60,11 @@ export async function InitNewAppFolder() {
 
     console.log('InitNewAppFolder:Running git clone');
     console.log('Running git clone...');
-    ExecGitCommand(['clone', '-b', selectedBranch, '--single-branch', templateRepo, newPath]);
+    ExecGitCommand(['clone', '--dissociate' , '-b', selectedBranch, '--single-branch', templateRepo, newPath]);
     UpdateAppTemplate(newPath,newAppName);
     try {
         RenameRepo(newPath,newRepoName)
-        AddRemote(newPath,newRepoName);
+        AddRemote(newPath,newRepoName, selectedBranch);
     } catch {
 
     }
@@ -113,15 +113,30 @@ function ReconnectBranch(newPath: string)
     ExecGitCommand(['push','--set-upstream','origin','master'],newPath);
 }
 
-function AddRemote(newPath: string,newRepoName: string)
+function CheckoutAsMaster(newPath: string)
+{
+    console.log('CheckoutAsMaster:Running git checkout -b master');
+    //ExecGitCommand(['branch','--set-upstream-to','origin'],newPath);
+    ExecGitCommand(['checkout','-b','master'],newPath);
+}
+
+function AddRemote(newPath: string,newRepoName: string, selectedBranch: string)
 {
     if (newRepoName) {
         console.log('AddRemote:Running git add');
         ExecGitCommand(['remote','add','origin',newRepoName],newPath);
-        DisconnectBranch(newPath);
+        if (selectedBranch === 'master') {
+            DisconnectBranch(newPath);
+        } else {
+            CheckoutAsMaster(newPath);
+        }
         ReconnectBranch(newPath);
     } else {
-        DisconnectBranch(newPath);
+        if (selectedBranch === 'master') {
+            DisconnectBranch(newPath);
+        } else {
+            CheckoutAsMaster(newPath);
+        }
     }
 }
 
@@ -214,7 +229,7 @@ function GetBranches(path: string) {
     ExecGitCommand(['remote', 'add', BRANCH_PREFIX, path], folderPath);
     ExecGitCommand(['fetch', '--depth=1', BRANCH_PREFIX], folderPath); 
     
-    let branches = ExecGitCommand(['branch', '-r', '-l', `${BRANCH_PREFIX}/*`], folderPath)
+    let branches = ExecGitCommand(['branch', '-r', '--list', `${BRANCH_PREFIX}/*`], folderPath)
         .stdout
         .toString()
         .split('\n'); // listing branches
