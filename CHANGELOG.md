@@ -1,10 +1,17 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.2.0] - 2019-10-22
+
+- Add selection of branch to clone in NaverticAL: GO!. This allows multiple template versions to exists (e.g. BC version or localization).
+
 ## [0.1.3] - 2019-01-29
+
 - Fixed bug when repository have spaces in name
 
 ## [0.1.2] - 2018-11-29
+
 - cleanup
 - starting powershell console by default
 

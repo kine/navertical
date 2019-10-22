@@ -65,6 +65,10 @@ Missing possibility to pull missing dependencies from package server.
 
 ## Release Notes
 
+### 0.2.0
+
+Added selection of branch to clone in NaverticAL: GO!. This allows multiple template versions to exists (e.g. BC version or localization).
+
 ### 0.1.1
 
 Removed unused configurations
