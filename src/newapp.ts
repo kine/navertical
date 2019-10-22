@@ -5,11 +5,16 @@ import * as terminal from './terminal';
 import * as path from "path";
 import * as fs from "fs";
 import * as guid from './guid';
+import 'pure-uuid';
+import * as os from 'os';
+import * as fse from 'fs-extra';
 
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 import { execFile, execFileSync, spawnSync } from "child_process";
 import { Stream } from "stream";
 import { homedir } from "os";
+import { format } from "util";
+import UUID from "pure-uuid";
 
 function ExecGitCommand(params:string[],newPath:string='')
 {
@@ -46,9 +51,16 @@ export async function InitNewAppFolder() {
     const templateRepo = vscode.workspace.getConfiguration().get('navertical.NewProjectRepository').toString();
     console.log('InitNewAppFolder:CreatingFolder');
     CheckAndCreateFolder(newPath);
+
+    const selectedBranch = await SelectBranch(templateRepo).then(result => result);
+    if (!selectedBranch) {
+        console.error('No branch selected');
+        return;
+    }
+
     console.log('InitNewAppFolder:Running git clone');
     console.log('Running git clone...');
-    ExecGitCommand(['clone','--dissociate',templateRepo,newPath]);
+    ExecGitCommand(['clone', '-b', selectedBranch, '--single-branch', templateRepo, newPath]);
     UpdateAppTemplate(newPath,newAppName);
     try {
         RenameRepo(newPath,newRepoName)
@@ -192,4 +204,68 @@ async function GetNewRepoName() {
         ignoreFocusOut: true
     });
     return newRepoName;
+}
+
+function GetBranches(path: string) {
+    const folderPath = CreateTempFolder();
+    const BRANCH_PREFIX = 'NVRTEMPLATE';
+
+    ExecGitCommand(['init'], folderPath);
+    ExecGitCommand(['remote', 'add', BRANCH_PREFIX, path], folderPath);
+    ExecGitCommand(['fetch', '--depth=1', BRANCH_PREFIX], folderPath); 
+    
+    let branches = ExecGitCommand(['branch', '-r', '-l', `${BRANCH_PREFIX}/*`], folderPath)
+        .stdout
+        .toString()
+        .split('\n'); // listing branches
+
+    ExecGitCommand(['remote', 'rm', BRANCH_PREFIX], folderPath); // removing remote
+
+    branches = branches.filter(branch => branch.length > 0);
+
+    for (let i = 0; i < branches.length; i++) {
+        branches[i] = branches[i].replace(`${BRANCH_PREFIX}/`, '').trim();
+    }
+
+    RemoveTempFolder(folderPath).then(() => console.log('Branches listed'));
+
+    return branches;
+}
+
+async function SelectBranch(path: string) {
+    const branches = GetBranches(path);
+
+    if (branches.length === 1) {
+        return branches[0];
+    }
+
+    const result = await vscode.window.showQuickPick(branches, {
+        placeHolder: 'Choose Branch',
+        ignoreFocusOut: true,
+        onDidSelectItem: item => item
+    });
+
+    if (!result) {
+        return null;
+    }
+    return result;
+}
+
+function CreateTempFolder() {
+    const id = new UUID(4).format();
+    const directory = path.join(os.tmpdir(), `Navertica\\NaverticAL\\${id}`);
+    
+    fse.mkdirs(directory).then(() => {
+        console.log(`Created directory: ${directory}`);
+    });
+
+    return directory;
+}
+
+async function RemoveTempFolder(path: string) {
+    fse.remove(path).then(() => {
+        console.log(`Folder ${path} deleted`);
+    }).catch(err => {
+        console.error(err);
+    });
 }
