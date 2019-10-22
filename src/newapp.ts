@@ -54,7 +54,7 @@ export async function InitNewAppFolder() {
 
     const selectedBranch = await SelectBranch(templateRepo).then(result => result);
     if (!selectedBranch) {
-        console.warn('No branch selected');
+        console.error('No branch selected');
         return;
     }
 
@@ -210,8 +210,9 @@ function GetBranches(path: string) {
     const folderPath = CreateTempFolder();
     const BRANCH_PREFIX = 'NVRTEMPLATE';
 
+    ExecGitCommand(['init'], folderPath);
     ExecGitCommand(['remote', 'add', BRANCH_PREFIX, path], folderPath);
-    ExecGitCommand(['fetch', BRANCH_PREFIX], folderPath); 
+    ExecGitCommand(['fetch', '--depth=1', BRANCH_PREFIX], folderPath); 
     
     let branches = ExecGitCommand(['branch', '-r', '-l', `${BRANCH_PREFIX}/*`], folderPath)
         .stdout
