@@ -1,0 +1,29 @@
+{
+	"NVR Summary": {
+		"prefix": [
+			"summary returns",
+			"summr"
+		],
+		"body": [
+			"///<summary>",
+			"/// ${1:Summary}",
+			"///</summary>",
+			"///<returns>${2:returns}</returns>"
+		],
+		"description": "Summary for AL with returns",
+		"scope": "al"
+	},
+	"NVR Summary Void": {
+		"prefix": [
+			"summary void",
+			"summv"
+		],
+		"body": [
+			"///<summary>",
+			"/// ${1:Summary}",
+			"///</summary>"
+		],
+		"description": "Summary for AL",
+		"scope": "al"
+	}
+}

@@ -146,6 +146,13 @@
                 "title": "Setup Remote Docker Folder",
                 "category": "Navertical"
             }
+        ],
+        "snippets": [
+            {
+                "language": "al",
+                "path": "./src/nvr-snippets.json",
+                "category": "Navertical"
+            }
         ]
     },
     "scripts": {
