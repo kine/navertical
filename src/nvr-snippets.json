@@ -16,7 +16,7 @@
 			"summ param"
 		],
 		"body": [
-			"/// <param name='${1:Name}'>${2:Description}</param>"
+			"/// <param name=\"${1:Name}\">${2:Description}</param>"
 		],
 		"description": "Summary parameter for AL",
 		"scope": "al"
@@ -29,8 +29,21 @@
 			"/// <summary>",
 			"/// ${1:Summary}",
 			"/// </summary>",
-			"/// <param name='${2:Name}'>${3:Description}</param>",
-			"/// <param name='${4:Name}'>${5:Description}</param>"
-		]
+			"/// <param name=\"${2:Name\">${3:Description}</param>",
+			"/// <param name=\"${4:Name}\">${5:Description}</param>",
+			"/// <returns>${6:Returns}</returns>"
+		],
+		"description": "Full summary for AL",
+		"scope": "al"
+	},
+	"NVR Summary Return": {
+		"prefix": [
+			"summ return"
+		],
+		"body": [
+			"/// <returns>${1:Returns}</returns>"
+		],
+		"description": "Summary returns for AL",
+		"scope": "al"
 	}
 }
