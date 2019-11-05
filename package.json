@@ -150,8 +150,7 @@
         "snippets": [
             {
                 "language": "al",
-                "path": "./src/nvr-snippets.json",
-                "category": "Navertical"
+                "path": "./snippets/nvr-snippets.json"
             }
         ]
     },

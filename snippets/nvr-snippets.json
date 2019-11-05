@@ -1,7 +1,7 @@
 {
 	"NVR Summary": {
 		"prefix": [
-			"summ"
+			"tsummary (nvr)"
 		],
 		"body": [
 			"/// <summary>",
@@ -13,7 +13,7 @@
 	},
 	"NVR Summary Param": {
 		"prefix": [
-			"summ param"
+			"tsummary param (nvr)"
 		],
 		"body": [
 			"/// <param name=\"${1:Name}\">${2:Description}</param>"
@@ -23,13 +23,13 @@
 	},
 	"NVR Summary Full": {
 		"prefix": [
-			"summ full"
+			"tsummary full (nvr)"
 		],
 		"body": [
 			"/// <summary>",
 			"/// ${1:Summary}",
 			"/// </summary>",
-			"/// <param name=\"${2:Name\">${3:Description}</param>",
+			"/// <param name=\"${2:Name}\">${3:Description}</param>",
 			"/// <param name=\"${4:Name}\">${5:Description}</param>",
 			"/// <returns>${6:Returns}</returns>"
 		],
@@ -38,7 +38,7 @@
 	},
 	"NVR Summary Return": {
 		"prefix": [
-			"summ return"
+			"tsummary return (nvr)"
 		],
 		"body": [
 			"/// <returns>${1:Returns}</returns>"
