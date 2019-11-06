@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.5.1] - 2019-11-06
+
+- Add snippets tsummary... to create Summary comments for procedure (the /// comments)
+
 ## [0.2.0] - 2019-10-22
 
 - Add selection of branch to clone in NaverticAL: GO!. This allows multiple template versions to exists (e.g. BC version or localization).
