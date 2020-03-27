@@ -62,9 +62,14 @@ export async function InitNewAppFolder() {
     console.log('Running git clone...');
     ExecGitCommand(['clone', '--dissociate' , '-b', selectedBranch, '--single-branch', templateRepo, newPath]);
     UpdateAppTemplate(newPath,newAppName);
+    const ReInitRepoEnabled = vscode.workspace.getConfiguration().get('navertical.ReInitRepo');
     try {
-        RenameRepo(newPath,newRepoName)
-        AddRemote(newPath,newRepoName, selectedBranch);
+        if (ReInitRepoEnabled) {
+            ReInitRepo(newPath, newRepoName);
+        } else {
+            RenameRepo(newPath, newRepoName)
+        }
+        AddRemote(newPath, newRepoName, selectedBranch);
     } catch {
 
     }
@@ -100,8 +105,26 @@ function RenameRepo(newPath: string,newRepoName: string)
     ExecGitCommand(['remote','rename','origin','template'],newPath);
 }
 
-function DisconnectBranch(newPath: string)
-{
+function ReInitRepo(newPath: string, newRepoName: string) {
+    console.log('Re-Init Repo:')
+    ClearGit(newPath);
+    ExecGitCommand(['init'], newPath);
+    ExecGitCommand(['add', '--all'], newPath);
+    ExecGitCommand(['commit', '-m', '"Initial commit"'], newPath)
+}
+
+function ClearGit(newPath: string) {
+    var gitPath = path.join(newPath, '\\.git\\');
+    console.log(`Trying to remove the git folder : ${gitPath}`)
+    try {
+        fse.removeSync(gitPath);
+        console.log(`Folder ${gitPath} deleted`);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function DisconnectBranch(newPath: string) {
     console.log('DisconnectBranch:Running git branch --unset-upstream');
     ExecGitCommand(['branch','--unset-upstream'],newPath);
 }
