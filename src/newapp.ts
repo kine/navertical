@@ -194,9 +194,21 @@ function UpdateTestAppJson(newPath:string,newAppName:string,appGuid:string)
 function RenameWorkspace(newPath: string,newAppName: string)
 {
     var fs= require('fs');
-    const oldWorkspaceFile = path.join(newPath,'\\MSDyn365BC_Base.code-workspace');
+    //const oldWorkspaceFile = path.join(newPath,'\\MSDyn365BC_Base.code-workspace');
+    const oldWorkspaceFile = FindFile(newPath,'.code-workspace');
     const newWorkspaceFile = path.join(newPath,`\\${newAppName}.code-workspace`);
     fs.renameSync(oldWorkspaceFile,newWorkspaceFile);
+}
+
+function FindFile(inPath: string, extension: string)
+{
+    var files=fs.readdirSync(inPath);
+    for(var i=0;i<files.length;i++){
+        var filename=path.join(inPath,files[i]);
+        if (filename.indexOf(extension)>=0) {
+            return filename;
+        };
+    };
 }
 
 function CheckAndCreateFolder(newPath: string) {
