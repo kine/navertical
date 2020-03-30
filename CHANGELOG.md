@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.5.2] - 2020-03-30
+
+- Add new setting to reinit repo to remove history (thanks @duichwer)
+
 ## [0.5.1] - 2019-11-06
 
 - Add snippets tsummary... to create Summary comments for procedure (the /// comments)
