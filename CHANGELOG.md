@@ -5,6 +5,7 @@
 ## [0.5.2] - 2020-03-30
 
 - Add new setting to reinit repo to remove history (thanks @duichwer)
+- Remove fixed named workspace for GO! command
 
 ## [0.5.1] - 2019-11-06
 
