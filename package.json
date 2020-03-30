@@ -68,6 +68,11 @@
                         "default": "https://github.com/kine/MSDyn365BC_AppTemplate",
                         "description": "GIT Repository which will be cloned when new App folder is created"
                     },
+                    "navertical.ReInitRepo": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "If set, the template project history will be removed for new projects."
+                    },
                     "navertical.JSONConfigFile": {
                         "type": "string",
                         "default": "",
