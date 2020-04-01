@@ -181,11 +181,16 @@ function UpdateTestAppJson(newPath:string,newAppName:string,appGuid:string)
     const newGuid = guid.createGuid();
     const appJsonPath = path.join(newPath,'\\TestApp\\app.json');
     var fs = require('fs');
+    var semver = require('semver');
     var appJson = JSON.parse(fs.readFileSync(appJsonPath,(error) => {console.log(`Cannot read file ${appJsonPath}`);}).toString());
     appJson.id = newGuid;
     appJson.name = `${newAppName}.Test`;
     appJson.brief = `${newAppName}.Test`;
-    appJson.dependencies[0].appId = appGuid;
+    if (appJson.runtime && semver.gte(semver.coerce(appJson.runtime), semver.coerce('4.1')))  {
+        appJson.dependencies[0].id = appGuid;
+    } else {
+        appJson.dependencies[0].appId = appGuid;
+    }
     appJson.dependencies[0].name = newAppName;
     fs.writeFileSync(appJsonPath,JSON.stringify(appJson,null,2),(error) => {console.log(`Cannot write file ${appJsonPath}`);});
     return newGuid;
