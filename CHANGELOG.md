@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.5.3] - 2020-04-01
+
+- Using id instead AppId in dependencies for runtime since v4.1 (thanks @duichwer)
+
 ## [0.5.2] - 2020-03-30
 
 - Add new setting to reinit repo to remove history (thanks @duichwer)
