@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.5.4] - 2020-04-15
+
+- Missing dependency added
+
 ## [0.5.3] - 2020-04-01
 
 - Using id instead AppId in dependencies for runtime since v4.1 (thanks @duichwer)
