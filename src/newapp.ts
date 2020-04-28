@@ -52,7 +52,7 @@ export async function InitNewAppFolder() {
     console.log('InitNewAppFolder:CreatingFolder');
     CheckAndCreateFolder(newPath);
 
-    const selectedBranch = await SelectBranch(templateRepo).then(result => result);
+    const selectedBranch = await SelectBranch(templateRepo);
     if (!selectedBranch) {
         console.error('No branch selected');
         return;
@@ -261,8 +261,8 @@ async function GetNewRepoName() {
     return newRepoName;
 }
 
-function GetBranches(path: string) {
-    const folderPath = CreateTempFolder();
+async function GetBranches(path: string) {
+    const folderPath = await CreateTempFolder();
     const BRANCH_PREFIX = 'NVRTEMPLATE';
 
     ExecGitCommand(['init'], folderPath);
@@ -288,7 +288,7 @@ function GetBranches(path: string) {
 }
 
 async function SelectBranch(path: string) {
-    const branches = GetBranches(path);
+    const branches = await GetBranches(path);
 
     if (branches.length === 1) {
         return branches[0];
@@ -306,11 +306,11 @@ async function SelectBranch(path: string) {
     return result;
 }
 
-function CreateTempFolder() {
+async function CreateTempFolder() {
     const id = new UUID(4).format();
     const directory = path.join(os.tmpdir(), `Navertica\\NaverticAL\\${id}`);
     
-    fse.mkdirs(directory).then(() => {
+    await fse.mkdirs(directory).then(() => {
         console.log(`Created directory: ${directory}`);
     });
 
@@ -318,7 +318,7 @@ function CreateTempFolder() {
 }
 
 async function RemoveTempFolder(path: string) {
-    fse.remove(path).then(() => {
+    await fse.remove(path).then(() => {
         console.log(`Folder ${path} deleted`);
     }).catch(err => {
         console.error(err);
