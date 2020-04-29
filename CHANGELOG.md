@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.5.5] - 2020-04-29
+
+- Changed async calls to prevent bug #20
+
 ## [0.5.4] - 2020-04-15
 
 - Missing dependency added
