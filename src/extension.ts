@@ -38,7 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('navertical.GetConfiguration',()=>{actions.GetConfiguration()}),
         vscode.commands.registerCommand('navertical.ForceDownload',()=>{actions.ForceDownload()}),
         vscode.commands.registerCommand('navertical.RunTests',()=>{actions.RunTests()}),
-        vscode.commands.registerCommand('navertical.SetupRemoteDockerFolder',()=>{remote.SetupRemoteDockerFolder()})
+        vscode.commands.registerCommand('navertical.SetupRemoteDockerFolder',()=>{remote.SetupRemoteDockerFolder()}),
+        vscode.commands.registerCommand('navertical.CheckDependencies',()=>{actions.CheckDependencies()})
     ];
 
     context.subscriptions.concat(commandList);

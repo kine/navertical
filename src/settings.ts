@@ -70,3 +70,19 @@ export function GetConfigCommand(remote:boolean):string
         return `Read-ALConfiguration -Path ${currentRoot} -SettingsFileName '${GetJSONConfigPath()}' -Profile '${GetJSONConfigProfile()}' -DockerHost ${GetRemoteDockerName()} -DockerHostSSL $${GetRemoteDockerSSL()} -PathMapString '${GetRemoteMapping()}'`
     }
 }
+
+export function GetAzureDevOpsUsername(): string {
+    return vscode.workspace.getConfiguration().get('navertical.AzureDevOpsUsername').toString();
+}
+
+export function GetDevOpsPAT(): string {
+    return vscode.workspace.getConfiguration().get('navertical.AzureDevOpsPAT').toString();
+}
+
+export function GetAzureCompanyName(): string {
+    return vscode.workspace.getConfiguration().get('navertical.AzureCompanyName').toString();
+}
+
+export function GetAzureArtifactFeedID(): string {
+    return vscode.workspace.getConfiguration().get('navertical.AzureArtifactFeedID').toString();
+}

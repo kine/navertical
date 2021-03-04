@@ -5,9 +5,12 @@ import * as path from "path";
 import * as fs from "fs";
 import * as guid from './guid';
 import * as settings from "./settings"
+import runCheck from './dependency';
 
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 import { execFile } from "child_process";
+
+
 
 export function CompileTree() {
     terminal.PSTerminal.show(true);
@@ -88,3 +91,6 @@ export function StopEnvironment() {
     terminal.SendPSText(`${settings.GetConfigCommand(true)} | Stop-ALEnvironment`);
 }
 
+export function CheckDependencies() {
+    runCheck();
+}
