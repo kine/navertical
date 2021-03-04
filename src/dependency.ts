@@ -1,14 +1,25 @@
 import axios from 'axios';
-import { fstat, readdirSync, existsSync } from 'fs';
+import { readdirSync, existsSync } from 'fs';
 import { major, gte } from 'semver';
 import { workspace, window } from 'vscode';
 
 import { GetAzureDevOpsUsername, GetDevOpsPAT, GetAzureCompanyName, GetAzureArtifactFeedID } from './settings';
 
 const getArtifacts = async (url) => {
-    axios.defaults.baseURL = `https://feeds.dev.azure.com/${GetAzureCompanyName()}/`;
+    const companyName = GetAzureCompanyName();
+    if (companyName === '') {
+        // window.showErrorMessage('Fill Azure Company Name in NaverticAL settings');
+        throw new Error('Company not set');
+    }
+    axios.defaults.baseURL = `https://feeds.dev.azure.com/${companyName}/`;
 
-    const authString = 'Basic' + Buffer.from(GetAzureDevOpsUsername() + ':' + GetDevOpsPAT()).toString('base64');
+    const username = GetAzureDevOpsUsername();
+    const pat = GetDevOpsPAT();
+    if (username === '' || pat === '') {
+        // window.showErrorMessage('Fill credentials in NaverticAL settings');
+        throw new Error('Credentials not set');
+    }
+    const authString = 'Basic' + Buffer.from(username + ':' + pat).toString('base64');
 
     const result = await axios.get(url, {
         headers: {
@@ -51,7 +62,12 @@ const compareToLocalPackages = async (localPath: string) => {
         return [];
     }
 
-    const artifacts = await getArtifacts(`_apis/packaging/feeds/${GetAzureArtifactFeedID()}/Packages?api-version=5.0-preview.1`);
+    const artifactFeedID = GetAzureArtifactFeedID();
+    if (artifactFeedID === '') {
+        // window.showErrorMessage('Fill Azure Artifact Feed ID in NaverticAL settings');
+        throw new Error('Feed ID not set');
+    }
+    const artifacts = await getArtifacts(`_apis/packaging/feeds/${artifactFeedID}/Packages?api-version=5.0-preview.1`);
 
     let fileNames = readdirSync(localPath);
 
@@ -124,10 +140,14 @@ const printOutdatedPackages = (folder) => {
         .then(outdatedPackages => {
 
             outdatedPackages.forEach(p => {
-                const message = `${folder.name}: New version for package ${p.name} is available (${p.matchedVersion})`;
+                const message = `${folder.name}: New version for package ${p.name} is available (${p.newVersion})`;
 
                 window.showInformationMessage(message);
             });
+        })
+        .catch(e => {
+            window.showErrorMessage(`NaverticAL: ${e.message}`);
+            return;
         });
 };
 
