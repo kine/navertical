@@ -8,6 +8,7 @@ import * as newapp from './newapp';
 import * as remote from './remote';
 import { workspace, WorkspaceEdit, ShellExecution } from 'vscode';
 import { removeListener } from 'cluster';
+import { CheckDependencies } from './actions';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -46,6 +47,8 @@ export function activate(context: vscode.ExtensionContext) {
     // vscode.window.onDidCloseTerminal
 
     vscode.window.onDidCloseTerminal((closedTerminal) => {terminal.TerminalClosed(closedTerminal)});
+
+    CheckDependencies();
 }
 
 // this method is called when your extension is deactivated
